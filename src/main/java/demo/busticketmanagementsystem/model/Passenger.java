@@ -6,11 +6,15 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter @Setter
 @Entity
 @Data
 @Table(name = "Passenger")
 public class Passenger {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,5 +35,11 @@ public class Passenger {
     @JsonProperty("gender")
     @Column(name = "gender")
     private String gender;
+
+
+
+    @Getter @Setter
+    @OneToMany( mappedBy = "passenger_id",fetch = FetchType.LAZY, cascade = CascadeType.ALL,orphanRemoval = true)
+    private Set<Ticket> tickets;
 
 }

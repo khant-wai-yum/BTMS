@@ -9,8 +9,8 @@ import lombok.Setter;
 @Getter @Setter
 @Entity
 @Data
-@Table(name = "Driver")
-public class Driver {
+@Table(name = "Drivers")
+public class Drivers {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +28,19 @@ public class Driver {
     @Column(name = "phone_number")
     private String phone_number;
 
+//    @JsonProperty("assigned_bus_id")
+//    @Column(name = "assigned_bus_id")
+//    private Long assigned_bus_id;
+
     @JsonProperty("assigned_bus_id")
     @Column(name = "assigned_bus_id")
-    private int assigned_bus_id;
+    private Long assigned_bus_id;  // Keeping this column
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assigned_bus_id", referencedColumnName = "bus_id", insertable = false, updatable = false)
+    private Bus bus;
+
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "bus_id", referencedColumnName = "bus_id")
+//    private Bus bus;
 }

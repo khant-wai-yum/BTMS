@@ -1,15 +1,17 @@
 package demo.busticketmanagementsystem.controller;
 
-import demo.busticketmanagementsystem.model.Bus;
-import demo.busticketmanagementsystem.model.Driver;
-import demo.busticketmanagementsystem.model.Passenger;
-import demo.busticketmanagementsystem.model.Route;
+import demo.busticketmanagementsystem.model.*;
 import demo.busticketmanagementsystem.service.*;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.imageio.spi.ServiceRegistry;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -38,9 +40,8 @@ public class BusController {
     private TicketService ticketService;
 
 
-
     //  Bus
-    @PostMapping ("/saveBus")
+    @PostMapping("/saveBus")
     public Bus saveBus(@RequestBody Bus bus) {
         return busService.saveBus(bus);
     }
@@ -58,16 +59,20 @@ public class BusController {
     }
 
     @DeleteMapping("delBusByID/{bus_id}")
-    public void delBusByID(@PathVariable Long bus_id){
+    public void delBusByID(@PathVariable Long bus_id) {
         busService.delBusByID(bus_id);
     }
 //--------------------------------------------------------------------------------
 
+
+    // Driver
     @PostMapping("/saveDriver")
-    public Driver saveDriver(@RequestBody Driver driver) {
-        return driverService.saveDriver(driver);
+    public Drivers saveDriver(@RequestBody Drivers drivers) {
+        return driverService.saveDriver(drivers);
     }
 //---------------------------------------------------------------------------------
+
+
     //  Passenger
     @PostMapping("/savePassenger")
     public Passenger savePassenger(@RequestBody Passenger passenger) {
@@ -78,8 +83,8 @@ public class BusController {
     public Page<Passenger> getAllPassengers(
             @RequestParam int page,
             @RequestParam int size
-    ){
-        return passengerService.getAllPassengers(page,size);
+    ) {
+        return passengerService.getAllPassengers(page, size);
     }
 
     @GetMapping("/findPassengerByID/{passenger_id}")
@@ -93,6 +98,7 @@ public class BusController {
     }
     //--------------------------------------------------------------------------------
 
+
     //  Route
     @PostMapping("/saveRoute")
     public Route saveRoute(@RequestBody Route route) {
@@ -103,8 +109,8 @@ public class BusController {
     public Page<Route> getAllRoutes(
             @RequestParam int page,
             @RequestParam int size
-    ){
-        return routeService.getAllRoutes(page,size);
+    ) {
+        return routeService.getAllRoutes(page, size);
     }
 
     @GetMapping("/findRouteByID/{route_id}")
@@ -115,6 +121,39 @@ public class BusController {
     @DeleteMapping("/delRouteByID/{route_id}")
     public void delRouteByID(@PathVariable Long route_id) {
         routeService.delRouteByID(route_id);
+    }
+    //--------------------------------------------------------------------------------------------------------------
+
+
+    //Schedule
+    @PostMapping("/saveSchedule")
+    public Schedule schedule(@RequestBody Schedule schedule) {
+
+        return scheduleService.saveSchedule(schedule);
+    }
+
+
+    //--------------------------------------------------------------------------------------------------------------
+
+
+    //Payment
+
+    @PostMapping("/savePayment")
+    public Payment payment(@RequestBody Payment payment) {
+
+        return paymentService.savePayment(payment);
+    }
+
+
+    //--------------------------------------------------------------------------------------------------------------
+
+    //Ticket
+
+
+    @PostMapping("/saveTicket")
+    public Ticket ticket(@RequestBody Ticket ticket) {
+
+        return ticketService.saveTicket(ticket);
     }
 }
 

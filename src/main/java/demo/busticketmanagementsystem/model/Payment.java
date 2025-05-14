@@ -1,5 +1,6 @@
 package demo.busticketmanagementsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -16,19 +17,20 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long payment_id;
 
-    @JsonProperty("ticket_id")
-    @Column(name = "ticket_id")
-    private int ticket_id;
-
     @JsonProperty("payment_date")
     @Column(name = "payment_date")
     private String payment_date;
 
-    @JsonProperty("amount")
-    @Column(name = "amout")
-    private String amount;
 
-    @JsonProperty("payment_method")
-    @Column(name = "payment_method")
-    private String payment_method;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JsonProperty("ticket_id")
+//    @JoinColumn(name = "ticket_id", referencedColumnName = "ticket_id", insertable = false, updatable = false )
+//    private Ticket ticket;
+
+
+
+    @OneToOne
+    @JoinColumn(name = "ticket_id", referencedColumnName = "ticket_id", insertable = false, updatable = false)
+    private Ticket ticket_id;
+
 }
